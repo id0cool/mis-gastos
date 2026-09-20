@@ -99,7 +99,7 @@ Las capturas de cada operación (agregar, validar, editar, eliminar, buscar, fil
 
 ## 9. Demostración
 
-El video de demostración (menos de 3 minutos) muestra las operaciones principales: validación, agregar, editar, eliminar, buscar, filtrar, ordenar, presupuesto y persistencia al recargar.
+El video de demostración (5 min 36 s) muestra las operaciones principales: validación, agregar, editar, eliminar, buscar, filtrar, ordenar, presupuesto, persistencia al recargar, vista móvil y una explicación del código.
 
 ---
 
