@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mis Gastos | Control de gastos personales</title>
+  <meta name="description" content="Aplicación web para registrar, editar, filtrar y resumir gastos personales. Los datos se guardan en el navegador con localStorage.">
+  <link rel="icon" href="img/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido principal</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <img src="img/logo.svg" alt="" width="40" height="40">
+        <span>Mis Gastos</span>
+      </div>
+      <p class="tagline">Control de gastos personales</p>
+    </div>
+  </header>
+
+  <main id="contenido" class="container">
+    <!-- Resumen: se calcula automáticamente con JavaScript -->
+    <section class="resumen" aria-labelledby="titulo-resumen">
+      <h1 id="titulo-resumen" class="visually-hidden">Resumen de gastos</h1>
+      <article class="stat">
+        <h2 class="stat-label">Total gastado</h2>
+        <p class="stat-value" id="stat-total">$0.00</p>
+      </article>
+      <article class="stat">
+        <h2 class="stat-label">Gasto de este mes</h2>
+        <p class="stat-value" id="stat-mes">$0.00</p>
+      </article>
+      <article class="stat">
+        <h2 class="stat-label">Registros</h2>
+        <p class="stat-value" id="stat-registros">0</p>
+      </article>
+      <article class="stat">
+        <h2 class="stat-label">Presupuesto mensual</h2>
+        <p class="stat-value" id="stat-presupuesto">—</p>
+        <div class="barra" aria-hidden="true"><div class="barra-relleno" id="barra-presupuesto"></div></div>
+      </article>
+    </section>
+
+    <div class="layout">
+      <!-- Formulario para agregar y editar -->
+      <section class="panel" aria-labelledby="titulo-form">
+        <h2 id="titulo-form">Nuevo gasto</h2>
+        <form id="form-gasto" novalidate>
+          <input type="hidden" id="gasto-id">
+
+          <div class="field">
+            <label for="descripcion">Descripción</label>
+            <input type="text" id="descripcion" name="descripcion" maxlength="60" autocomplete="off"
+                   aria-describedby="error-descripcion">
+            <p class="error" id="error-descripcion" aria-live="polite"></p>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="monto">Monto (MXN)</label>
+              <input type="number" id="monto" name="monto" min="0.01" step="0.01" inputmode="decimal"
+                     aria-describedby="error-monto">
+              <p class="error" id="error-monto" aria-live="polite"></p>
+            </div>
+            <div class="field">
+              <label for="fecha">Fecha</label>
+              <input type="date" id="fecha" name="fecha" aria-describedby="error-fecha">
+              <p class="error" id="error-fecha" aria-live="polite"></p>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="categoria">Categoría</label>
+            <select id="categoria" name="categoria" aria-describedby="error-categoria">
+              <option value="">Selecciona una categoría</option>
+            </select>
+            <p class="error" id="error-categoria" aria-live="polite"></p>
+          </div>
+
+          <div class="acciones">
+            <button type="submit" class="btn btn--primario" id="btn-guardar">Agregar gasto</button>
+            <button type="button" class="btn btn--secundario" id="btn-cancelar" hidden>Cancelar edición</button>
+          </div>
+        </form>
+
+        <form id="form-presupuesto" class="presupuesto" novalidate>
+          <label for="presupuesto">Presupuesto mensual (opcional)</label>
+          <div class="inline">
+            <input type="number" id="presupuesto" min="0" step="50" inputmode="decimal" placeholder="Ej. 3000">
+            <button type="submit" class="btn btn--secundario">Guardar</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Lista de gastos con búsqueda, filtro y ordenamiento -->
+      <section class="panel" aria-labelledby="titulo-lista">
+        <div class="lista-header">
+          <h2 id="titulo-lista">Mis gastos</h2>
+          <p class="contador" id="contador" aria-live="polite">0 de 0 registros</p>
+        </div>
+
+        <div class="filtros" role="search">
+          <div class="field">
+            <label for="buscar">Buscar</label>
+            <input type="search" id="buscar" placeholder="Descripción…">
+          </div>
+          <div class="field">
+            <label for="filtro-categoria">Categoría</label>
+            <select id="filtro-categoria">
+              <option value="todas">Todas</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="ordenar">Ordenar por</label>
+            <select id="ordenar">
+              <option value="fecha-desc">Fecha (reciente primero)</option>
+              <option value="fecha-asc">Fecha (antiguo primero)</option>
+              <option value="monto-desc">Monto (mayor a menor)</option>
+              <option value="monto-asc">Monto (menor a mayor)</option>
+              <option value="desc-asc">Descripción (A-Z)</option>
+            </select>
+          </div>
+        </div>
+
+        <ul class="lista" id="lista-gastos"></ul>
+        <p class="vacio" id="mensaje-vacio">Todavía no hay gastos registrados. Agrega el primero con el formulario.</p>
+
+        <h3 class="subtitulo">Total por categoría</h3>
+        <ul class="por-categoria" id="por-categoria"></ul>
+      </section>
+    </div>
+  </main>
+
+  <!-- Mensajes emergentes para el usuario -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Mis Gastos — Actividad 3, Laboratorio de Programación Web (FIME-UANL). Angel Bernardo Rodríguez Parlanch, 1951732.</p>
+      <p>Los datos se guardan solo en este navegador (localStorage).</p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
