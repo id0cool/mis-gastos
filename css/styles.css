@@ -1,0 +1,501 @@
+/* ==========================================================================
+   Mis Gastos — Estilos
+   Mobile-first. Layout con Grid y Flexbox. Breakpoints: 40em y 64em.
+   ========================================================================== */
+
+/* ---------- 1. Variables ---------- */
+:root {
+  --fondo: #f4f7f6;
+  --superficie: #ffffff;
+  --texto: #1d2b27;
+  --texto-suave: #4f5f5a;
+  --primario: #1f6f5c;
+  --primario-hover: #15503f;
+  --acento: #f2c14e;
+  --borde: #cfdcd7;
+  --error: #b3261e;
+  --foco: #1f5fbf;
+  --radio: 0.75rem;
+  --sombra: 0 0.25rem 1rem rgb(29 43 39 / 0.08);
+  --fuente: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+/* ---------- 2. Base ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--fuente);
+  line-height: 1.5;
+  color: var(--texto);
+  background-color: var(--fondo);
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.2;
+  margin: 0 0 1rem;
+}
+
+.container {
+  width: 100%;
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+:focus-visible {
+  outline: 3px solid var(--foco);
+  outline-offset: 2px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 100;
+  padding: 0.75rem 1rem;
+  background: var(--primario-hover);
+  color: #fff;
+  font-weight: 700;
+  border-radius: 0 0 0.5rem 0.5rem;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* ---------- 3. Encabezado y pie ---------- */
+.site-header {
+  background-color: var(--primario);
+  color: #fff;
+}
+
+.header-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+  padding-block: 0.9rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+
+.tagline {
+  margin: 0;
+  color: #d5efe6;
+}
+
+.site-footer {
+  margin-top: 2.5rem;
+  padding-block: 1.5rem;
+  background-color: #e3ebe8;
+  color: var(--texto-suave);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.site-footer p {
+  margin: 0.25rem 0;
+}
+
+/* ---------- 4. Resumen (Grid) ---------- */
+.resumen {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  margin-block: 1.5rem;
+}
+
+.stat {
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  padding: 1rem;
+  box-shadow: var(--sombra);
+}
+
+.stat-label {
+  margin: 0 0 0.25rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--texto-suave);
+}
+
+.stat-value {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--primario-hover);
+}
+
+.barra {
+  height: 0.5rem;
+  margin-top: 0.5rem;
+  background: #e3ebe8;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.barra-relleno {
+  height: 100%;
+  width: 0;
+  background: var(--primario);
+  transition: width 0.3s ease;
+}
+
+.barra-relleno.excedido {
+  background: var(--error);
+}
+
+/* ---------- 5. Paneles ---------- */
+.layout {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.panel {
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  padding: 1.25rem;
+  box-shadow: var(--sombra);
+}
+
+.panel h2 {
+  font-size: 1.25rem;
+}
+
+/* ---------- 6. Formularios ---------- */
+.field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.9rem;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0 0.9rem;
+}
+
+label {
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+input,
+select {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.55rem 0.7rem;
+  border: 2px solid var(--borde);
+  border-radius: 0.5rem;
+  font: inherit;
+  color: var(--texto);
+  background: #fff;
+}
+
+input[aria-invalid="true"],
+select[aria-invalid="true"] {
+  border-color: var(--error);
+  background: #fdf1f0;
+}
+
+.error {
+  min-height: 1.2rem;
+  margin: 0.25rem 0 0;
+  color: var(--error);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.acciones,
+.inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.inline input {
+  flex: 1 1 8rem;
+}
+
+.presupuesto {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--borde);
+}
+
+.presupuesto label {
+  display: block;
+}
+
+/* ---------- 7. Botones ---------- */
+.btn {
+  min-height: 2.75rem;
+  padding: 0.55rem 1.1rem;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn--primario {
+  background: var(--primario);
+  color: #fff;
+}
+
+.btn--primario:hover {
+  background: var(--primario-hover);
+}
+
+.btn--secundario {
+  background: #fff;
+  color: var(--primario-hover);
+  border-color: var(--primario);
+}
+
+.btn--secundario:hover {
+  background: #e7f3ef;
+}
+
+.btn-icono {
+  min-height: 2.25rem;
+  padding: 0.3rem 0.75rem;
+  border: 1px solid var(--borde);
+  border-radius: 0.5rem;
+  background: #fff;
+  color: var(--primario-hover);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-icono:hover {
+  background: #e7f3ef;
+}
+
+.btn-icono--peligro {
+  color: var(--error);
+}
+
+.btn-icono--peligro:hover {
+  background: #fdf1f0;
+}
+
+/* ---------- 8. Lista de gastos ---------- */
+.lista-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.contador {
+  margin: 0 0 1rem;
+  color: var(--texto-suave);
+  font-weight: 600;
+}
+
+.filtros {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0 0.75rem;
+}
+
+.lista,
+.por-categoria {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.gasto {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "chip monto"
+    "info info"
+    "acciones acciones";
+  gap: 0.35rem 0.75rem;
+  align-items: center;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--borde);
+}
+
+.chip {
+  grid-area: chip;
+  justify-self: start;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--chip) 18%, white);
+  color: color-mix(in srgb, var(--chip) 70%, black);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.gasto-info {
+  grid-area: info;
+}
+
+.gasto-desc {
+  margin: 0;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.gasto-fecha {
+  margin: 0;
+  color: var(--texto-suave);
+  font-size: 0.85rem;
+}
+
+.gasto-monto {
+  grid-area: monto;
+  margin: 0;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.gasto-acciones {
+  grid-area: acciones;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.vacio {
+  color: var(--texto-suave);
+  font-style: italic;
+}
+
+.subtitulo {
+  margin-top: 1.5rem;
+  font-size: 1.05rem;
+}
+
+.por-categoria li {
+  display: grid;
+  grid-template-columns: auto 7.5rem 1fr auto;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.35rem 0;
+}
+
+.por-categoria li.vacio {
+  display: block;
+}
+
+.punto {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  background: var(--chip);
+}
+
+.pc-barra {
+  height: 0.5rem;
+  background: #eef3f1;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.pc-barra span {
+  display: block;
+  height: 100%;
+  background: var(--chip);
+}
+
+/* ---------- 9. Mensajes emergentes ---------- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 1.25rem;
+  transform: translate(-50%, 150%);
+  max-width: calc(100% - 2rem);
+  padding: 0.8rem 1.2rem;
+  border-radius: 0.6rem;
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 0.5rem 1.5rem rgb(0 0 0 / 0.2);
+  transition: transform 0.25s ease;
+}
+
+.toast.visible {
+  transform: translate(-50%, 0);
+}
+
+.toast--exito {
+  background: var(--primario-hover);
+}
+
+.toast--error {
+  background: var(--error);
+}
+
+.toast--info {
+  background: #334155;
+}
+
+/* ---------- 10. Breakpoint tableta (≥ 40em) ---------- */
+@media (min-width: 40em) {
+  .resumen {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .field-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .filtros {
+    grid-template-columns: 2fr 1fr 1.4fr;
+  }
+
+  .gasto {
+    grid-template-columns: auto 1fr auto auto;
+    grid-template-areas: "chip info monto acciones";
+  }
+}
+
+/* ---------- 11. Breakpoint escritorio (≥ 64em) ---------- */
+@media (min-width: 64em) {
+  .layout {
+    grid-template-columns: 22rem 1fr;
+    align-items: start;
+  }
+
+  .layout > .panel:first-child {
+    position: sticky;
+    top: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
